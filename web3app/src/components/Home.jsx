@@ -24,9 +24,9 @@ const Home = () => {
   const {IPFS_IMAGE_HASH} = useWeb3();
   const toast = useToast();
   const [account, setAccount] = useState(null);
-  const [provider, setProvider] = useState(null);
-  const [signer, setSigner] = useState(null);
-  const [contract, setContract] = useState(null);
+  //const [provider, setProvider] = useState(null);
+  // const [signer, setSigner] = useState(null);
+  // const [contract, setContract] = useState(null);
   const [balance, setBalance] = useState(null);
 
   const [loading, setLoading] = useState(false);
@@ -37,27 +37,20 @@ const Home = () => {
     }
   }, [account]);
 
-  useEffect(() => {
-    async function initProvider() {
-      if (ethereum) {
-        try {
-          const provider = new ethers.providers.Web3Provider(ethereum);
-          const signer = await provider.getSigner();
-          const contract = new ethers.Contract(
-            NFTABI.address,
-            NFTABI.abi,
-            signer,
-          );
-          setProvider(provider);
-          setContract(contract);
-          setSigner(signer);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    }
-    initProvider();
-  }, [ethereum, account]);
+  // useEffect(() => {
+  //   async function initProvider() {
+  //     if (ethereum) {
+  //       try {
+  //         const provider = new ethers.providers.Web3Provider(ethereum, 'any');
+
+  //         setSigner(signer);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     }
+  //   }
+  //   initProvider();
+  // }, [ethereum, account]);
 
   const getBalance = async () => {
     console.log('GET BALANCE');
@@ -70,6 +63,7 @@ const Home = () => {
     }
 
     try {
+      const provider = new ethers.providers.Web3Provider(ethereum, 'any');
       const bal = await provider.getBalance(account);
       console.log('BALANCE', ethers.utils.formatEther(bal));
       // setProvider(provider);
@@ -101,16 +95,14 @@ const Home = () => {
       return 'Please install MetaMask!';
     }
     try {
-      //const provider = new ethers.providers.Web3Provider(ethereum);
+      const provider = new ethers.providers.Web3Provider(ethereum);
 
       if (!provider) {
         console.log('Provider not found');
         return 'Provider not found';
       }
 
-      //console.log('PROVIDER', provider);
-
-      //const signer = await provider.getSigner();
+      const signer = provider.getSigner();
 
       if (!signer) {
         console.log('Signer not found');
