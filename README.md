@@ -22,13 +22,11 @@ The app comes with the following features:
 - **Mint NFT**: Users can mint nft.
 - **See their NFTS**: Users can see their minted NFTS.
 
-<!-- ## Screenshots
+## Screenshots
 
 Here are some screenshots of the app in action:
 
-![Screenshot 1](/screenshots/screenshot_1.png "Screenshot 1")
-![Screenshot 2](/screenshots/screenshot_2.png "Screenshot 2")
-![Screenshot 3](/screenshots/screenshot_3.png "Screenshot 3") -->
+[Screenshot 1](/screenshots/IMG_3086.PNG "Screenshot 1")
 
 ## Contributing
 
