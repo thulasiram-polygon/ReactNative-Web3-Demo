@@ -4,7 +4,7 @@ This is a React Native mobile demo app that demonstrates how to communicate with
 
 ## Getting Started
 
-To get started with the app, you need to configure your device. Feel follow this link for the official React Native instructions `https://reactnative.dev/docs/next/environment-setup`.
+To get started with the app, you need to configure your device. Feel follow this link for the official React Native instructions `https://reactnative.dev/docs/environment-setup`.
 
 After that you can follow these steps:
 
@@ -19,7 +19,8 @@ The app comes with the following features:
 
 - **Connect Metamask Wallet**: Users can connect their Metamask wallet to the app.
 - **View Account Balance**: Users can view their account balance in the app.
-- **Send Transactions**: Users can send transactions or interact with smart contracts.
+- **Mint NFT**: Users can mint nft.
+- **See their NFTS**: Users can see their minted NFTS.
 
 <!-- ## Screenshots
 

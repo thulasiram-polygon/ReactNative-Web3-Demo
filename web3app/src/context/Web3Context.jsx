@@ -8,8 +8,6 @@ const Web3Context = React.createContext(null);
 
 export const Web3Provider = ({children}) => {
   const [account, setAccount] = useState(null);
-  const [chain, setChain] = useState(null);
-  const [balance, setBalance] = useState(null);
   const [provider, setProvider] = useState(null);
 
   useEffect(() => {
