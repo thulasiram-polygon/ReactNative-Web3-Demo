@@ -1,20 +1,21 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {ethereum} from '../helpers/createWeb3Wallet';
+import React, {useState, useEffect, useContext, createContext} from 'react';
+import MetaMaskSDK from '@metamask/sdk';
 import {ethers} from 'ethers';
+import {ethereum} from '../helpers/createWeb3Wallet';
+
 import NFTABI from '../abi/abi.json';
 const IPFS_IMAGE_HASH = 'QmQMCDLBqGqCyyQjgiSNxV6r5sBtbthSAy7y7ncwy97nQh';
 
-const Web3Context = React.createContext(null);
+const Web3Context = createContext(null);
 
 export const Web3Provider = ({children}) => {
   const [account, setAccount] = useState(null);
-  const [provider, setProvider] = useState(null);
 
-  useEffect(() => {
-    if (ethereum) {
-      setProvider(new ethers.providers.Web3Provider(ethereum));
-    }
-  }, [ethereum]);
+  // useEffect(() => {
+  //   if (ethereum) {
+  //     setProvider(new ethers.providers.Web3Provider(ethereum));
+  //   }
+  // }, [ethereum]);
 
   const connectWallet = async () => {
     if (!ethereum) {
@@ -32,7 +33,7 @@ export const Web3Provider = ({children}) => {
   };
 
   return (
-    <Web3Context.Provider value={{account, provider, IPFS_IMAGE_HASH}}>
+    <Web3Context.Provider value={{account, connectWallet, IPFS_IMAGE_HASH}}>
       {children}
     </Web3Context.Provider>
   );

@@ -12,8 +12,8 @@ import {
 } from 'native-base';
 import 'react-native-get-random-values';
 import '@ethersproject/shims';
-import {ethereum} from '../helpers/createWeb3Wallet';
 import {ethers} from 'ethers';
+import {ethereum} from '../helpers/createWeb3Wallet';
 import {useWeb3} from '../context/Web3Context';
 import {ScrollView} from 'react-native';
 import {shortenAddress} from '../helpers/shortenAddress';
@@ -21,14 +21,12 @@ import NFTABI from '../abi/abi.json';
 import UserNFTs from './UserNFTs';
 
 const Home = () => {
-  const {IPFS_IMAGE_HASH} = useWeb3();
+  const {IPFS_IMAGE_HASH, connectWallet, account} = useWeb3();
   const toast = useToast();
-  const [account, setAccount] = useState(null);
-  //const [provider, setProvider] = useState(null);
+  // const [provider, setProvider] = useState(null);
   // const [signer, setSigner] = useState(null);
   // const [contract, setContract] = useState(null);
   const [balance, setBalance] = useState(null);
-
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -64,6 +62,7 @@ const Home = () => {
 
     try {
       const provider = new ethers.providers.Web3Provider(ethereum, 'any');
+      // setProvider(provider);
       const bal = await provider.getBalance(account);
       console.log('BALANCE', ethers.utils.formatEther(bal));
       // setProvider(provider);
@@ -73,20 +72,20 @@ const Home = () => {
     }
   };
 
-  const connectWallet = async () => {
-    if (!ethereum) {
-      alert('Please install MetaMask!');
-      return;
-    }
-    try {
-      const result = await ethereum.request({method: 'eth_requestAccounts'});
-      console.log('RESULT', result?.[0]);
-      setAccount(result?.[0]);
-      //getBalance();
-    } catch (e) {
-      console.log('ERROR', e);
-    }
-  };
+  // const connectWallet = async () => {
+  //   if (!ethereum) {
+  //     alert('Please install MetaMask!');
+  //     return;
+  //   }
+  //   try {
+  //     const result = await ethereum.request({method: 'eth_requestAccounts'});
+  //     console.log('RESULT', result?.[0]);
+  //     setAccount(result?.[0]);
+  //     //getBalance();
+  //   } catch (e) {
+  //     console.log('ERROR', e);
+  //   }
+  // };
 
   const mintNFT = async () => {
     console.log('MINT NFT');
@@ -94,13 +93,13 @@ const Home = () => {
       //console.log('Please install MetaMask!');
       return 'Please install MetaMask!';
     }
+    const provider = new ethers.providers.Web3Provider(ethereum, 'any');
+    if (!provider) {
+      console.log('Provider not found');
+      return 'Provider not found';
+    }
     try {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-
-      if (!provider) {
-        console.log('Provider not found');
-        return 'Provider not found';
-      }
+      // const provider = new ethers.providers.Web3Provider(ethereum);
 
       const signer = provider.getSigner();
 
@@ -127,6 +126,7 @@ const Home = () => {
     try {
       const error = await mintNFT();
       setLoading(false);
+
       if (error) {
         console.log(error);
         toast.show({
@@ -142,8 +142,9 @@ const Home = () => {
         });
       }
     } catch (error) {
-      console.log(error);
       setLoading(false);
+      console.log(error);
+
       toast.show({
         title: 'Error',
         status: 'error',
